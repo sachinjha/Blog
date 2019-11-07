@@ -33,12 +33,13 @@ rm -rf kube-resources/ibm-db2oltp-dev/templates/tests
 5. Create the required scc and give access to the namespace as described in the helm chart documentation 
     [podsecuritypolicy-requirements](https://github.com/IBM/charts/tree/master/stable/ibm-db2oltp-dev#podsecuritypolicy- requirements).
 
-   "privileged" scc would most likely already exist in the cluster. Just add  the \<namespace\>:\<serviceaccounts\> group to      it using command below. 
+   "privileged" scc would most likely already exist in the cluster. Just add  the \<namespace\>:\<serviceaccounts\> group to      it using command below. Also run the script ./createSCCandNS.sh --namespace <NAMESPACE>  to add other required scc to    
+   namespace.
 
 ```bash
  oc adm policy add-scc-to-group privileged system:serviceaccounts:<NAMESPACE>
 ```
-   Also run the script ./createSCCandNS.sh --namespace <NAMESPACE>  to add other required scc to namespace.
+   
 
 6. Switch to the project where db2 is to be installed  and then create the resources using the generated files.
 
@@ -47,7 +48,7 @@ oc project db2
 oc create -f ./kube-resources
 ```
 
-7. check logs of db2 pod. It may take a little while to create the sample db. In my case it took 20+ mins for all the 
+7. Check logs of db2 pod. It may take a little while to create the sample db. In my case it took 20+ mins for all the 
 initialization activities to complete.
 
 
