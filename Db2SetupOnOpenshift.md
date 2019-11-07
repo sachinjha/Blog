@@ -1,6 +1,5 @@
-# Miscellanous
-Installing DB2 developer edition on Openshift (without IBM cloud pak for Data)
----
+# Installing DB2 developer edition on Openshift (without IBM cloud pak for Data)
+
 
 
 Follow the setps to install DB2 using the configuration used in helm charts published by IBM for use in ICP.
@@ -10,7 +9,10 @@ the oc create -f  command to generate individual components like secrets, servic
 
 <!--more-->
 ### Here are the high level steps
-1. git clone https://github.com/IBM/charts
+1. Clone IBM helm charts repository 
+```bash
+   git clone https://github.com/IBM/charts
+```
 2. create a copy of the file : stable/ibm-db2oltp-dev/values.yaml  so that you can update the values as required. 
    Sample values.yaml file is given below
 ```bash
@@ -28,17 +30,18 @@ helm template charts/stable/ibm-db2oltp-dev --output-dir ./kube-resources/  --va
 ```bash
 rm -rf kube-resources/ibm-db2oltp-dev/templates/tests
 ```
-5. Create the required scc and give access to the namespace as described in the helm chart documentation [podsecuritypolicy-requirements](https://github.com/IBM/charts/tree/master/stable/ibm-db2oltp-dev#podsecuritypolicy-requirements).
+5. Create the required scc and give access to the namespace as described in the helm chart documentation 
+    [podsecuritypolicy-requirements](https://github.com/IBM/charts/tree/master/stable/ibm-db2oltp-dev#podsecuritypolicy- requirements).
 
-"privileged" scc would most likely already exist in the cluster. Just add  the \<namespace\>:\<serviceaccounts\> group to it using 
-command below. 
+   "privileged" scc would most likely already exist in the cluster. Just add  the \<namespace\>:\<serviceaccounts\> group to      it using command below. 
 
 ```bash
  oc adm policy add-scc-to-group privileged system:serviceaccounts:<NAMESPACE>
 ```
-Also run the script ./createSCCandNS.sh --namespace <NAMESPACE>  to add other required scc to namespace.
+   Also run the script ./createSCCandNS.sh --namespace <NAMESPACE>  to add other required scc to namespace.
 
 6. Switch to the project where db2 is to be installed  and then create the resources using the generated files.
+
 ```bash
 oc project db2
 oc create -f ./kube-resources
@@ -46,6 +49,8 @@ oc create -f ./kube-resources
 
 7. check logs of db2 pod. It may take a little while to create the sample db. In my case it took 20+ mins for all the 
 initialization activities to complete.
+
+
 
 ### Sample values.yaml file
 
