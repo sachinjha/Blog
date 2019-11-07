@@ -22,15 +22,15 @@ the oc create -f  command to generate individual components like secrets, servic
 ```bash
    mkdir kube-resources
 ```
-3. Run the following command to replace the placeholders with values from values.yaml
+4. Run the following command to replace the placeholders with values from values.yaml
 ```bash
 helm template charts/stable/ibm-db2oltp-dev --output-dir ./kube-resources/  --values ./values.yaml  --name db2-release
 ```
-4. Delete tests folder under ./kube-resources/
+5. Delete tests folder under ./kube-resources/
 ```bash
 rm -rf kube-resources/ibm-db2oltp-dev/templates/tests
 ```
-5. Create the required scc and give access to the namespace as described in the helm chart documentation 
+6. Create the required scc and give access to the namespace as described in the helm chart documentation 
     [podsecuritypolicy-requirements](https://github.com/IBM/charts/tree/master/stable/ibm-db2oltp-dev#podsecuritypolicy- requirements).
    "privileged" scc would most likely already exist in the cluster. Just add  the \<namespace\>:\<serviceaccounts\> group to      it using command below. Also run the script ./createSCCandNS.sh --namespace <NAMESPACE>  to add other required scc to    
    namespace.
@@ -40,14 +40,14 @@ rm -rf kube-resources/ibm-db2oltp-dev/templates/tests
 ```
    
 
-6. Switch to the project where db2 is to be installed  and then create the resources using the generated files.
+7. Switch to the project where db2 is to be installed  and then create the resources using the generated files.
 
 ```bash
 oc project db2
 oc create -f ./kube-resources
 ```
 
-7. Check logs of db2 pod. It may take a little while to create the sample db. In my case it took 20+ mins for all the 
+8. Check logs of db2 pod. It may take a little while to create the sample db. In my case it took 20+ mins for all the 
 initialization activities to complete.
 
 
