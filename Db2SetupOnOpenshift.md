@@ -1,12 +1,8 @@
 # Miscellanous
-Notes /Steps for doing different things
+Installing DB2 developer edition on Openshift (without IBM cloud pak for Data)
 ---
-layout: post
-date: 2019-11-07 
-categories: API Connect
-title: "Installing DB2 developer edition on Openshift (without IBM cloud pak for Data)"
-author: ["sachinkj"]
----
+
+
 Follow the setps to install DB2 using the configuration used in helm charts published by IBM for use in ICP.
 The oc new-app --docker-image option to install the db2 docker image from docker hub was tried but there were some issues, 
 so the approach taken here is to convert the template files in helm chart into files with all values replaced and then use
@@ -34,7 +30,7 @@ rm -rf kube-resources/ibm-db2oltp-dev/templates/tests
 ```
 5. Create the required scc and give access to the namespace as described in the helm chart documentation [podsecuritypolicy-requirements](https://github.com/IBM/charts/tree/master/stable/ibm-db2oltp-dev#podsecuritypolicy-requirements).
 
-"privileged" scc would most likely already exist in the cluster. Just add  the <namespace>:<serviceaccounts> group to it using 
+"privileged" scc would most likely already exist in the cluster. Just add  the \<namespace\>:\<serviceaccounts\> group to it using 
 command below. 
 
 ```bash
