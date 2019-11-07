@@ -32,7 +32,6 @@ rm -rf kube-resources/ibm-db2oltp-dev/templates/tests
 ```
 5. Create the required scc and give access to the namespace as described in the helm chart documentation 
     [podsecuritypolicy-requirements](https://github.com/IBM/charts/tree/master/stable/ibm-db2oltp-dev#podsecuritypolicy- requirements).
-
    "privileged" scc would most likely already exist in the cluster. Just add  the \<namespace\>:\<serviceaccounts\> group to      it using command below. Also run the script ./createSCCandNS.sh --namespace <NAMESPACE>  to add other required scc to    
    namespace.
 
